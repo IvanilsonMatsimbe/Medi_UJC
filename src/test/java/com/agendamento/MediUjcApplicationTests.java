@@ -1,4 +1,4 @@
-package com.medi_ujc;
+package com.agendamento;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
