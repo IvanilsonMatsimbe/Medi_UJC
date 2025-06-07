@@ -16,15 +16,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
-            .authorizeRequests()
+            .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/medicos/**").hasRole("MEDICO")
-                .requestMatchers("/api/pacientes/**").hasRole("PACIENTE")
+                .requestMatchers("/api/consultas/**").hasAnyRole("PACIENTE", "MEDICO")
                 .anyRequest().authenticated()
-            .and()
+            )
             .httpBasic();
-        
         return http.build();
     }
 

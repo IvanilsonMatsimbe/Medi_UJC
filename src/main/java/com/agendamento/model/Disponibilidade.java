@@ -30,5 +30,4 @@ public class Disponibilidade {
     public enum DiaSemana {
         SEG, TER, QUA, QUI, SEX, SAB, DOM
     }
-    
 }

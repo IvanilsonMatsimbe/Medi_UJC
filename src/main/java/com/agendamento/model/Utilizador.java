@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
 @Data
 @Entity
-@Table(name = "Utilizador")
+@Table(name = "utilizador")
 public class Utilizador implements UserDetails {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,9 +31,13 @@ public class Utilizador implements UserDetails {
     private TipoUtilizador tipo;
     
     private String telefone;
-    private LocalDate data_nascimento;
+    
+    @Column(name = "data_nascimento")
+    private LocalDate dataNascimento;
+    
     private String endereco;
-    private String crm;
+    
+    private String crm; // Apenas para médicos
     
     @Column(name = "data_criacao", nullable = false, updatable = false)
     private LocalDateTime dataCriacao = LocalDateTime.now();
@@ -42,7 +45,6 @@ public class Utilizador implements UserDetails {
     @Column(nullable = false)
     private Boolean ativo = true;
 
-    // Security implementation
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(tipo);
