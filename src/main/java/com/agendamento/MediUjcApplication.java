@@ -1,4 +1,4 @@
-package com.medi_ujc;
+package com.agendamento;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
