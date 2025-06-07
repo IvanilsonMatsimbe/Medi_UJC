@@ -2,6 +2,7 @@ package com.agendamento.controller;
 
 import com.agendamento.model.Consulta;
 import com.agendamento.service.ConsultaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
