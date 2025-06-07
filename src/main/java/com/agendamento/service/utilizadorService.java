@@ -5,7 +5,7 @@ import com.agendamento.model.Utilizador;
 import java.util.List;
 import java.util.Optional;
 
-public interface utilizadorService {
+public interface UtilizadorService {
     Utilizador salvar(Utilizador utilizador);
     List<Utilizador> listarTodos();
     Optional<Utilizador> buscarPorId(Long id);
