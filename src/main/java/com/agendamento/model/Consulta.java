@@ -2,13 +2,11 @@ package com.agendamento.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 public class Consulta {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,11 +19,11 @@ public class Consulta {
     @JoinColumn(name = "medico_id", nullable = false)
     private Utilizador medico;
     
-    @Column(nullable = false)
-    private LocalDateTime data_hora_inicio;
+    @Column(name = "data_hora_inicio", nullable = false)
+    private LocalDateTime dataHoraInicio;
     
-    @Column(nullable = false)
-    private LocalDateTime data_hora_fim;
+    @Column(name = "data_hora_fim", nullable = false)
+    private LocalDateTime dataHoraFim;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -33,8 +31,8 @@ public class Consulta {
     
     private String observacoes;
     
-    @Column(nullable = false)
-    private Boolean confirmacao_presenca = false;
+    @Column(name = "confirmacao_presenca", nullable = false)
+    private Boolean confirmacaoPresenca = false;
     
     public enum StatusConsulta {
         AGENDADA, REALIZADA, CANCELADA, REMARCADA, CONFIRMADA
