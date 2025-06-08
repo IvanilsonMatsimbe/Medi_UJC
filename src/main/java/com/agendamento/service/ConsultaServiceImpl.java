@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ConsultaServiceImpl implements ConsultaService {
@@ -33,6 +34,34 @@ public class ConsultaServiceImpl implements ConsultaService {
             throw new ConflictException("Médico não disponível neste horário");
         }
         return consultaRepository.save(consulta);
+    }
+
+    @Override
+    public List<Consulta> listarTodas() {
+        return consultaRepository.findAll();
+    }
+
+    @Override
+    public Optional<Consulta> buscarPorId(Integer id) {
+        return consultaRepository.findById(id);
+    }
+
+    @Override
+    public Consulta atualizarConsulta(Integer id, Consulta consulta) {
+        return consultaRepository.findById(id)
+                .map(existing -> {
+                    consulta.setId(id);
+                    return consultaRepository.save(consulta);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada"));
+    }
+
+    @Override
+    public void excluirConsulta(Integer id) {
+        if (!consultaRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Consulta não encontrada");
+        }
+        consultaRepository.deleteById(id);
     }
 
     @Override

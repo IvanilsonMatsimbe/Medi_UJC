@@ -1,7 +1,7 @@
-// UtilizadorServiceImpl.java
 package com.agendamento.service;
 
 import com.agendamento.exception.ConflictException;
+import com.agendamento.exception.ResourceNotFoundException;
 import com.agendamento.model.Utilizador;
 import com.agendamento.repository.UtilizadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UtilizadorServiceImpl implements UtilizadorService {
 
     @Override
     public Utilizador salvar(Utilizador utilizador) {
-        if (existsByEmail(utilizador.getEmail())) {
+        if (utilizador.getId() == null && existsByEmail(utilizador.getEmail())) {
             throw new ConflictException("Email já registrado");
         }
         return utilizadorRepository.save(utilizador);
@@ -33,16 +33,37 @@ public class UtilizadorServiceImpl implements UtilizadorService {
     }
 
     @Override
-    public Optional<Utilizador> buscarPorId(Long id) {
-        return utilizadorRepository.findById(id.intValue());
+    public Optional<Utilizador> buscarPorId(Integer id) {
+        return utilizadorRepository.findById(id);
     }
 
     @Override
-    public void remover(Long id) {
-        utilizadorRepository.deleteById(id.intValue());
+    public Utilizador atualizar(Integer id, Utilizador utilizador) {
+        return utilizadorRepository.findById(id)
+                .map(existing -> {
+                    utilizador.setId(id);
+                    return utilizadorRepository.save(utilizador);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     }
+
+    @Override
+    public void remover(Integer id) {
+        if (!utilizadorRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        }
+        utilizadorRepository.deleteById(id);
+    }
+
     @Override
     public boolean existsByEmail(String email) {
         return utilizadorRepository.existsByEmail(email);
     }
+
+    @Override
+    public List<Utilizador> listarPorTipo(Utilizador.TipoUtilizador tipo) {
+        return utilizadorRepository.findByTipo(tipo);
+    }
+
+
 }
