@@ -10,4 +10,5 @@ public interface UtilizadorService {
     List<Utilizador> listarTodos();
     Optional<Utilizador> buscarPorId(Long id);
     void remover(Long id);
+    boolean existsByEmail(String email);
 }

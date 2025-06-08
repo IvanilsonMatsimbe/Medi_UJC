@@ -12,4 +12,6 @@ public interface UtilizadorRepository extends JpaRepository<Utilizador, Integer>
     Optional<Utilizador> findByEmail(String email);
     boolean existsByEmail(String email);
     List<Utilizador> findByTipo(Utilizador.TipoUtilizador tipo);
+    
+
 }

@@ -1,12 +1,11 @@
+// ConsultaController.java
 package com.agendamento.controller;
 
 import com.agendamento.model.Consulta;
 import com.agendamento.service.ConsultaService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ public class ConsultaController {
     private final ConsultaService consultaService;
 
     @Autowired
-
     public ConsultaController(ConsultaService consultaService) {
         this.consultaService = consultaService;
     }
@@ -35,7 +33,6 @@ public class ConsultaController {
         return ResponseEntity.ok(consultaService.agendarConsulta(consulta));
     }
 
-
     @Operation(summary = "Cancelar consulta", description = "Este endpoint permite cancelar uma consulta existente pelo seu ID.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Consulta cancelada com sucesso"),
@@ -49,7 +46,6 @@ public class ConsultaController {
     ) {
         return ResponseEntity.ok(consultaService.cancelarConsulta(id, motivo));
     }
-
 
     @Operation(summary = "Listar consultas por médico", description = "Este endpoint permite retornar uma lista de consultas agendadas para um médico específico.")
     @ApiResponses(value = {

@@ -14,6 +14,6 @@ public class Especialidade {
     private String nome;
     
     private String descricao;
-
+ 
     
 }

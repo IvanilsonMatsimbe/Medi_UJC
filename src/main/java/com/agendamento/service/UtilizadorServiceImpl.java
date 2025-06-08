@@ -1,9 +1,10 @@
+// UtilizadorServiceImpl.java
 package com.agendamento.service;
 
+import com.agendamento.exception.ConflictException;
 import com.agendamento.model.Utilizador;
 import com.agendamento.repository.UtilizadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,19 +13,17 @@ import java.util.Optional;
 public class UtilizadorServiceImpl implements UtilizadorService {
 
     private final UtilizadorRepository utilizadorRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UtilizadorServiceImpl(UtilizadorRepository utilizadorRepository, 
-                                PasswordEncoder passwordEncoder) {
+    public UtilizadorServiceImpl(UtilizadorRepository utilizadorRepository) {
         this.utilizadorRepository = utilizadorRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public Utilizador salvar(Utilizador utilizador) {
-        // Encrypt password before saving
-        utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
+        if (existsByEmail(utilizador.getEmail())) {
+            throw new ConflictException("Email já registrado");
+        }
         return utilizadorRepository.save(utilizador);
     }
 
@@ -41,5 +40,9 @@ public class UtilizadorServiceImpl implements UtilizadorService {
     @Override
     public void remover(Long id) {
         utilizadorRepository.deleteById(id.intValue());
+    }
+    @Override
+    public boolean existsByEmail(String email) {
+        return utilizadorRepository.existsByEmail(email);
     }
 }
